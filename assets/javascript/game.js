@@ -11,15 +11,17 @@
 // var guessWord;
 
 // var emptySpace;
-var newTextContent = "";
 
-    var wordBank = ["burger", "jimmypesto", "kuchikopi", "wagstaff", "teddy", "mort", "frond"];
 
-    //var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    var newTextContent = "";
+
+    var wordBank = ["burger", "jimmypesto", "kuchikopi", "wagstaff", "teddy", "mort", "frond", "andy", "ollie", "tina", "louise", "gene", "bob", "linda", "belcher", "jimmyjr"];
 
     var wins = 0; 
     var guessTotal = 15;
     var guessedLetters = "";
+
+    var wordLength = 0;
 
     var winsText = document.getElementById("wins-text");
     var guessesLeft = document.getElementById("guesses-left-text");
@@ -36,11 +38,15 @@ var newTextContent = "";
         newTextContent += "_";
 
         currentWord.appendChild(emptySpace);
-    }
+        }
+
 
 function gameRestart() {
 
-    
+    newTextContent = "";
+
+    wordLength = 0;
+
     guessTotal = 15;
     guessedLetters = "";
 
@@ -66,7 +72,6 @@ function gameRestart() {
 
 document.onkeyup = function(event) {
 
-    //if (guessWord.includes(event.key) & guessWord[j] === event.key)
 
     winsText.textContent = "Wins: " + wins;
 
@@ -91,15 +96,7 @@ document.onkeyup = function(event) {
             updatedNewUserText += userGuess;
             // newTextContent[j] = userGuess;
             var userChoseALetterThatWasInTheWord = true;
-            //var replace = str.replace("_", userGuess);
-            //document.getElementById("")
-            // emptySpace.textContent = userGuess;
-            //guessWord[j].innerHTML = userGuess;
-            //lettersGuessed.innerHTML = userGuess;
-
-            // var str = document.getElementById("demo").innerHTML; 
-            // var res = str.replace("Microsoft", "W3Schools");
-            // document.getElementById("demo").innerHTML = res;
+            wordLength = wordLength + 1;
         } else {
             updatedNewUserText += newTextContent[j];
         }
@@ -108,11 +105,11 @@ document.onkeyup = function(event) {
     newTextContent = updatedNewUserText;
     currentWord.textContent = newTextContent;
 
-    var emptySpace = document.createElement("span");
-        emptySpace.newTextContent = "_ ";
-        newTextContent += "_";
+    // var space = document.createElement("span");
+    //     space.updatedNewTextContent = "_ ";
+    //     updatedNewTextContent += "_";
 
-        currentWord.appendChild(emptySpace);
+    //     currentWord.appendChild(space);
 
 
     if (!userChoseALetterThatWasInTheWord) {
@@ -122,10 +119,21 @@ document.onkeyup = function(event) {
       }
 
     if (guessTotal === 0) {
-        alert("Game over");
+        alert("Game over. Word was " + guessWord);
         guessesLeft.textContent = " ";
         lettersGuessed.textContent = " ";
         currentWord.textContent = " ";
+
+        gameRestart();
+    }
+
+    if (wordLength === guessWord.length) {
+        alert("You won! Word was " + guessWord);
+        guessesLeft.textContent = " ";
+        lettersGuessed.textContent = " ";
+        currentWord.textContent = " ";
+
+        wins = wins + 1;
 
         gameRestart();
     }
